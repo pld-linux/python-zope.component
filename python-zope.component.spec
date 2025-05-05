@@ -3,7 +3,7 @@
 %bcond_without	doc	# Sphinx documentation
 %bcond_with	tests	# unit tests (circular zope.security dependency)
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-zope.component.spec)
 
 %define module	zope.component
 Summary:	Core of the Zope Component Architecture
@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Rdzeń Zope Component Architecture
 Name:		python-%{module}
 # keep 5.x here for python2 support
 Version:	5.1.0
-Release:	3
+Release:	4
 License:	ZPL v2.1
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/z/zope.component/zope.component-%{version}.tar.gz
@@ -60,13 +60,13 @@ BuildRequires:	python3-zope.testrunner
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	python3-repoze.sphinx.autointerface
-BuildRequires:	python3-zope.deferredimport >= 4.2.1
-BuildRequires:	python3-zope.deprecation >= 4.3.0
-BuildRequires:	python3-zope.event
-BuildRequires:	python3-zope.hookable >= 4.2.0
-BuildRequires:	python3-zope.interface >= 5.3.0
-BuildRequires:	sphinx-pdg-3
+BuildRequires:	python-repoze.sphinx.autointerface
+BuildRequires:	python-zope.deferredimport >= 4.2.1
+BuildRequires:	python-zope.deprecation >= 4.3.0
+BuildRequires:	python-zope.event
+BuildRequires:	python-zope.hookable >= 4.2.0
+BuildRequires:	python-zope.interface >= 5.3.0
+BuildRequires:	sphinx-pdg-2
 %endif
 Requires:	python-modules >= 1:2.7
 Provides:	Zope-Component
@@ -117,7 +117,8 @@ Dokumentacja API modułu Pythona zope.deferredimport.
 
 %if %{with doc}
 PYTHONPATH=$(pwd)/src \
-%{__make} -C docs html
+%{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
